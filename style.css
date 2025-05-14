@@ -1,0 +1,482 @@
+/* style.css - Tema Moderno e Sofisticado "Tech Nova" */
+
+/* Importando fontes do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Orbitron:wght@500;700&display=swap');
+
+:root {
+    --cor-primaria: #0D1B2A;      /* Azul escuro profundo (fundo) */
+    --cor-secundaria: #1B263B;   /* Azul um pouco mais claro (cards, containers) */
+    --cor-terciaria: #415A77;    /* Cinza azulado (bordas, elementos secundários) */
+    --cor-texto-principal: #E0E1DD;/* Quase branco (texto principal) */
+    --cor-texto-secundario: #A9B4C2;/* Cinza claro (textos de apoio, placeholders) */
+    --cor-acento-vibrante: #00A9E0;/* Ciano vibrante (destaques, botões ativos) */
+    --cor-sucesso: #2ECC71;       /* Verde para sucesso */
+    --cor-erro: #E74C3C;         /* Vermelho para erro */
+    --cor-aviso: #F39C12;        /* Laranja para aviso */
+
+    --fonte-principal: 'Roboto', sans-serif;
+    --fonte-titulos-destaque: 'Orbitron', sans-serif; /* Fonte com pegada "tech" */
+
+    --sombra-padrao: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --sombra-leve: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --border-radius-padrao: 8px;
+    --transicao-padrao: all 0.3s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-principal);
+    line-height: 1.6;
+    padding: 25px;
+    overflow-x: hidden; /* Evitar scroll horizontal desnecessário */
+}
+
+#container {
+    max-width: 1300px; /* Um pouco mais largo */
+    margin: 20px auto;
+    background-color: var(--cor-secundaria);
+    padding: 30px;
+    border-radius: var(--border-radius-padrao);
+    box-shadow: var(--sombra-padrao);
+    border: 1px solid var(--cor-terciaria);
+}
+
+h1, h2, h3, h4 {
+    color: var(--cor-texto-principal);
+    margin-bottom: 0.8em;
+}
+h1 {
+    font-family: var(--fonte-titulos-destaque);
+    text-align: center;
+    font-size: 2.8em;
+    color: var(--cor-acento-vibrante);
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(0, 169, 224, 0.3);
+}
+h1 .fa-warehouse {
+    margin-right: 10px;
+    color: var(--cor-aviso); /* Ícone da garagem com cor de aviso */
+}
+h2 { font-size: 1.8em; font-weight: 500; border-bottom: 1px solid var(--cor-terciaria); padding-bottom: 10px;}
+h3 { font-size: 1.5em; font-weight: 500; color: var(--cor-acento-vibrante);}
+h4 { font-size: 1.2em; font-weight: 500; color: var(--cor-texto-secundario);}
+
+
+#abas-navegacao {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 15px;
+}
+
+#abas-navegacao button {
+    font-family: var(--fonte-titulos-destaque);
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    border: 2px solid var(--cor-terciaria);
+    padding: 12px 28px;
+    border-radius: 50px; /* Botões bem arredondados */
+    cursor: pointer;
+    transition: var(--transicao-padrao);
+    font-size: 1em;
+    letter-spacing: 0.5px;
+}
+
+#abas-navegacao button:hover {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-acento-vibrante);
+    background-color: rgba(0, 169, 224, 0.1);
+}
+
+#abas-navegacao button.aba-ativa {
+    background-color: var(--cor-acento-vibrante);
+    color: var(--cor-primaria);
+    border-color: var(--cor-acento-vibrante);
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(0, 169, 224, 0.5);
+}
+#abas-navegacao button i { margin-right: 8px; }
+
+.secao-principal { display: none; }
+.secao-principal.ativa {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card "Tech" - Sem Glassmorphism, mas com profundidade e bordas sutis */
+.glass-card { /* Mantendo a classe, mas o estilo é novo */
+    background-color: var(--cor-secundaria);
+    border: 1px solid var(--cor-terciaria);
+    border-radius: var(--border-radius-padrao);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--sombra-leve);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+
+
+/* Área de Alertas */
+.alertas-container {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius-padrao);
+    background-color: rgba(0,0,0,0.1); /* Fundo mais sutil */
+    border-left: 4px solid var(--cor-aviso);
+}
+.alertas-container h4 { color: var(--cor-aviso); margin-bottom: 10px; }
+.alertas-container ul { list-style: none; padding-left: 0; margin-bottom: 0;}
+.alertas-container li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cor-terciaria);
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+    font-size: 0.95em;
+}
+.alertas-container li:last-child { border-bottom: none; }
+.alertas-container li:hover { color: var(--cor-acento-vibrante); }
+.alertas-container li strong { color: var(--cor-texto-principal); font-weight: 500;}
+
+/* Formulários com Estilo Moderno */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    font-size: 0.9em;
+}
+input[type="text"], input[type="number"], input[type="date"], input[type="time"], select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border: 1px solid var(--cor-terciaria);
+    border-radius: 6px;
+    background-color: var(--cor-primaria); /* Fundo do input igual ao body */
+    color: var(--cor-texto-principal);
+    font-size: 0.95em;
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="time"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--cor-acento-vibrante);
+    box-shadow: 0 0 0 3px rgba(0, 169, 224, 0.2);
+}
+input[type="text"]::placeholder, textarea::placeholder { color: var(--cor-texto-secundario); opacity: 0.7; }
+select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23A9B4C2' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; padding-right: 40px; }
+textarea { min-height: 100px; resize: vertical; }
+
+/* Botões de Ação (Submit, Modern-button) */
+button[type="submit"], .modern-button {
+    font-family: var(--fonte-titulos-destaque);
+    background-color: var(--cor-acento-vibrante);
+    color: var(--cor-primaria);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px; /* Botões de ação arredondados */
+    cursor: pointer;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: var(--transicao-padrao), transform 0.1s ease-out;
+    box-shadow: var(--sombra-leve);
+}
+button[type="submit"]:hover, .modern-button:hover {
+    background-color: #0095cc; /* Tom mais escuro do acento */
+    box-shadow: var(--sombra-padrao);
+    transform: translateY(-2px);
+}
+button[type="submit"]:active, .modern-button:active {
+    transform: translateY(0px);
+}
+button[type="submit"]:disabled, .modern-button:disabled {
+    background-color: var(--cor-terciaria);
+    color: var(--cor-texto-secundario);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+button i { margin-right: 8px;}
+
+
+/* Menu de Veículos */
+#menu-veiculos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--cor-terciaria);
+}
+#menu-veiculos button {
+    font-family: var(--fonte-principal);
+    font-weight: 500;
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    border: 1px solid var(--cor-terciaria);
+    padding: 8px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transicao-padrao);
+    font-size: 0.9em;
+}
+#menu-veiculos button:hover {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-acento-vibrante);
+    background-color: rgba(0, 169, 224, 0.05);
+}
+#menu-veiculos button.veiculo-ativo {
+    background-color: var(--cor-acento-vibrante);
+    color: var(--cor-primaria);
+    border-color: var(--cor-acento-vibrante);
+    font-weight: 700;
+}
+.loading-placeholder, .empty-placeholder { color: var(--cor-texto-secundario); font-style: italic; font-size: 0.95em; }
+
+/* Área de Display do Veículo */
+#veiculo-display-area .placeholder {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 1.2em;
+    color: var(--cor-texto-secundario);
+}
+#veiculo-display-area .placeholder i {
+    font-size: 2em;
+    margin-bottom: 15px;
+    display: block;
+    color: var(--cor-terciaria);
+}
+
+.veiculo-renderizado {
+    display: grid;
+    grid-template-columns: minmax(320px, 1.2fr) minmax(320px, 1.8fr); /* Ajuste de proporção */
+    gap: 25px;
+}
+@media (max-width: 850px) { /* Ponto de quebra para empilhar */
+    .veiculo-renderizado { grid-template-columns: 1fr; }
+}
+
+.veiculo-titulo { /* Já estilizado em h2, mas podemos refinar aqui se necessário */
+    grid-column: 1 / -1;
+    font-family: var(--fonte-titulos-destaque);
+    color: var(--cor-aviso); /* Título do veículo com cor de aviso */
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card-info-basica .veiculo-imagem {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: var(--border-radius-padrao);
+    margin-bottom: 20px;
+    border: 1px solid var(--cor-terciaria);
+    object-fit: cover; /* Para imagens não distorcerem */
+    aspect-ratio: 16/10; /* Proporção para consistência */
+    box-shadow: var(--sombra-leve);
+}
+.informacoes-veiculo p { margin: 6px 0; font-size: 0.95em; }
+.info-label { font-weight: 500; color: var(--cor-texto-secundario); margin-right: 5px;}
+.veiculo-status.status-ligado { color: var(--cor-sucesso); font-weight: 700; }
+.veiculo-status.status-desligado { color: var(--cor-erro); font-weight: 700; }
+.veiculo-cnh-info .cnh-status { font-weight: bold; }
+.veiculo-cnh-info .cnh-vencida { color: var(--cor-erro); }
+.veiculo-cnh-info .cnh-vence-breve { color: var(--cor-aviso); }
+
+/* Velocímetro e Barra de Aceleração com visual "Tech" */
+.velocimetro {
+    width: 120px; height: 60px;
+    border: 2px solid var(--cor-terciaria);
+    border-bottom-color: transparent; /* Abre a base */
+    border-radius: 100px 100px 0 0;
+    position: relative; margin: 15px auto;
+    background: radial-gradient(circle at 50% 100%, rgba(0,0,0,0.2) 0%, transparent 70%);
+}
+.ponteiro {
+    width: 3px; height: 55px; background: var(--cor-acento-vibrante);
+    position: absolute; bottom: 0; left: 50%;
+    transform-origin: 50% 95%; /* Ponto de rotação mais abaixo */
+    transform: translateX(-50%) rotate(-90deg);
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 0 5px var(--cor-acento-vibrante);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* Transição suave */
+}
+.barra-aceleracao {
+    width: 100%; height: 12px; background-color: var(--cor-primaria);
+    border-radius: 6px; overflow: hidden; margin-top: 8px; border: 1px solid var(--cor-terciaria);
+}
+.barra-progresso {
+    width: 0%; height: 100%;
+    background: linear-gradient(to right, var(--cor-sucesso), #5cb85c);
+    border-radius: 6px;
+    transition: width 0.4s ease-out;
+}
+
+/* Ações do Veículo e Edição */
+.acoes-veiculo button, .edicao-veiculo button, .agendamento-section button, .historico-section button {
+    margin: 6px 4px; /* Ajuste de margem */
+    padding: 10px 18px; /* Padding um pouco maior */
+    font-size: 0.9em;
+}
+.btn-excluir-veiculo { background-color: var(--cor-erro); color: var(--cor-texto-principal); }
+.btn-excluir-veiculo:hover { background-color: #c0392b; }
+.salvar-veiculo-btn { background-color: var(--cor-sucesso); color: var(--cor-primaria); }
+.salvar-veiculo-btn:hover { background-color: #27ae60; }
+
+.acoes-veiculo .carga-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+.acoes-veiculo .carga-input {
+    width: 90px; padding: 10px; margin-bottom: 0;
+}
+
+/* Detalhes Extras API e Planejador */
+.detalhes-extras-card, #planejador-viagem { margin-top: 25px; }
+.detalhes-extras-area { margin-top: 15px; }
+.detalhes-extras-area ul { list-style: none; padding: 0; }
+.detalhes-extras-area li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--cor-terciaria);
+    padding-bottom: 10px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+.detalhes-extras-area li:last-child { border-bottom: none; }
+.detalhes-extras-area li strong { color: var(--cor-acento-vibrante); font-weight: 500; }
+.recall-info {
+    color: var(--cor-aviso); font-weight: 500; margin-top: 12px;
+    border: 1px solid var(--cor-aviso); padding: 10px; border-radius: 6px;
+    background-color: rgba(243, 156, 18, 0.05);
+    font-size: 0.9em;
+}
+#previsao-resultado-area .weather-card {
+    background-color: var(--cor-primaria); /* Card de previsão com fundo mais escuro */
+    padding: 20px;
+    border-radius: var(--border-radius-padrao);
+    border: 1px solid var(--cor-terciaria);
+    box-shadow: var(--sombra-leve);
+}
+#previsao-resultado-area h4 { color: var(--cor-acento-vibrante); font-size: 1.3em; margin-bottom: 15px;}
+#previsao-resultado-area img.weather-icon {
+    vertical-align: middle;
+    width: 60px; height: 60px;
+    margin-right: 10px;
+    filter: drop-shadow(0 0 5px rgba(0, 169, 224, 0.3)); /* Sombra no ícone */
+}
+
+/* Histórico de Manutenção */
+.lista-historico { max-height: 300px; overflow-y: auto; padding-right: 10px;} /* Scroll se muitos itens */
+.lista-historico ul { list-style: none; padding-left: 0; }
+.lista-historico li {
+    padding: 12px 15px; margin-bottom: 10px;
+    background-color: var(--cor-primaria);
+    border-radius: 6px;
+    border-left: 4px solid var(--cor-acento-vibrante);
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-out;
+    box-shadow: var(--sombra-leve);
+}
+.lista-historico li:hover { background-color: rgba(0, 169, 224, 0.05); }
+.btn-limpar-historico { background-color: var(--cor-aviso); color: var(--cor-primaria); }
+.btn-limpar-historico:hover{ background-color: #d68910; }
+
+/* Preview de Imagem */
+.imagem-preview-container { margin-top: 12px; }
+.imagem-preview {
+    max-width: 220px; max-height: 160px;
+    border: 1px solid var(--cor-terciaria);
+    border-radius: 6px;
+    display: block; margin-bottom: 8px;
+    object-fit: cover;
+}
+.warning-text { color: var(--cor-aviso); font-size: 0.85em; }
+input[type="file"] { /* Estilização básica do input file */
+    color: var(--cor-texto-secundario);
+    padding: 10px;
+    border: 1px dashed var(--cor-terciaria);
+    border-radius: 6px;
+    cursor: pointer;
+}
+input[type="file"]::file-selector-button {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-terciaria);
+    color: var(--cor-texto-principal);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.2s ease-out;
+}
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--cor-acento-vibrante);
+    color: var(--cor-primaria);
+}
+
+
+/* Esconder elementos controlados por JS */
+#add-capacidade-carga-container { display: none; }
+#add-imagem-preview, .edit-imagem-preview { display: none; }
+
+/* Estilos para o Planejador de Viagem */
+#planejador-viagem label {
+    color: var(--cor-texto-secundario);
+}
+#planejador-viagem input[type="text"] {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-principal);
+}
+#planejador-viagem input[type="text"]::placeholder {
+    color: var(--cor-texto-secundario);
+    opacity: 0.7;
+}
+#planejador-viagem small {
+    font-size: 0.85em;
+    color: var(--cor-texto-secundario);
+    display: block;
+    margin-top: 4px;
+}
+#btn-buscar-previsao {
+    /* Já herda de .modern-button, mas pode ter ajustes específicos */
+    margin-top: 15px;
+}
+
+/* Scrollbar customizada (opcional, para um toque extra) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--cor-primaria);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--cor-terciaria);
+    border-radius: 10px;
+    border: 2px solid var(--cor-primaria); /* Espaçamento entre thumb e track */
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-acento-vibrante);
+}

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Garagem Inteligente v9 - APIs Conectadas!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css"> <!-- Ou use os estilos inline abaixo -->
+
+   
+</head>
+<body>
+<div id="container">
+    <h1><i class="fa-solid fa-warehouse"></i> Garagem Inteligente v9</h1>
+
+    <nav id="abas-navegacao">
+        <button id="tab-garagem" class="aba-ativa"><i class="fa-solid fa-car-side"></i> Ver Garagem</button>
+        <button id="tab-adicionar"><i class="fa-solid fa-plus-circle"></i> Adicionar Veículo</button>
+    </nav>
+
+    <div id="cnh-alertas-area" class="alertas-container"></div>
+    <div id="notificacoes-area" class="alertas-container"></div>
+
+    <section id="secao-garagem" class="secao-principal ativa" aria-labelledby="tab-garagem">
+        <h2><i class="fa-solid fa-car-on"></i> Minha Frota</h2>
+        <div id="menu-veiculos">
+            <span class="loading-placeholder">Consultando banco de dados... <i class="fa-solid fa-spinner fa-spin"></i></span>
+        </div>
+        <div id="veiculo-display-area">
+            <div class="placeholder">
+                <i class="fa-solid fa-hand-pointer"></i>
+                Selecione um veículo no menu acima para visualizar seus detalhes e controles.
+            </div>
+        </div>
+
+        <section id="agendamentos-futuros" class="glass-card" aria-label="Próximos Agendamentos">
+            <h3><i class="fa-solid fa-calendar-check"></i> Próximos Agendamentos (Todos)</h3>
+            <div id="agendamentos-futuros-lista">
+                 <p>Verificando agenda... <i class="fa-solid fa-spinner fa-spin"></i></p>
+            </div>
+        </section>
+
+        <!-- NOVA SEÇÃO: Planejador de Viagem -->
+        <section id="planejador-viagem" class="glass-card" aria-label="Planejar Viagem">
+            <h3><i class="fa-solid fa-cloud-sun-rain"></i> Planejar Viagem com Previsão</h3>
+            <div class="form-grid">
+                <div>
+                    <label for="viagem-destino">Destino (Cidade):*</label>
+                    <input type="text" id="viagem-destino" placeholder="Ex: Curitiba">
+                </div>
+                <!-- O campo de API Key foi removido daqui -->
+            </div>
+            <button id="btn-buscar-previsao" class="modern-button">
+                <i class="fa-solid fa-magnifying-glass-location"></i> Ver Previsão do Tempo
+            </button>
+            
+            <!-- INÍCIO: CONTROLES DE INTERATIVIDADE DA PREVISÃO -->
+            <div id="controles-previsao" style="margin-top: 15px; display: none;"> <!-- Inicialmente escondido -->
+                <div id="filtros-previsao-dias" style="margin-bottom: 10px; text-align: center;">
+                    <span style="margin-right: 10px; color: #ecf0f1; font-size: 0.9em;">Mostrar previsão para:</span>
+                    <button data-dias="1" class="filtro-dia-btn modern-button">Hoje</button>
+                    <button data-dias="3" class="filtro-dia-btn modern-button">3 Dias</button>
+                    <button data-dias="5" class="filtro-dia-btn modern-button filtro-dia-btn-ativo">5 Dias</button> 
+                </div>
+            </div>
+            <!-- FIM: CONTROLES DE INTERATIVIDADE DA PREVISÃO -->
+
+            <div id="previsao-resultado-area" class="detalhes-extras-area" style="margin-top: 5px;">
+                <p>Digite a cidade para ver a previsão.</p> <!-- Mensagem ajustada -->
+            </div>
+        </section>
+        <!-- FIM NOVA SEÇÃO: Planejador de Viagem -->
+
+    </section> <!-- Fim da #secao-garagem -->
+
+
+    <section id="secao-adicionar" class="secao-principal" aria-labelledby="tab-adicionar">
+        <div id="add-veiculo-section" class="glass-card">
+            <h2><i class="fa-solid fa-circle-plus"></i> Registrar Novo Veículo</h2>
+            <form id="form-add-veiculo">
+                <div class="form-grid">
+                    <div>
+                        <label for="add-modelo">Modelo:*</label>
+                        <input type="text" id="add-modelo" required placeholder="Ex: Maverick GT V8">
+                    </div>
+                    <div>
+                        <label for="add-cor">Cor:</label>
+                        <input type="text" id="add-cor" placeholder="Ex: Laranja Califórnia">
+                    </div>
+                    <div>
+                        <label for="add-placa">Placa:</label>
+                        <input type="text" id="add-placa" placeholder="Ex: BRA2E19" pattern="[A-Za-z]{3}[0-9][A-Za-z0-9][0-9]{2}|[A-Za-z]{3}[0-9]{4}" title="Formato antigo (AAA1234) ou Mercosul (AAA1B23)">
+                    </div>
+                    <div>
+                        <label for="add-ano">Ano:</label>
+                        <input type="number" id="add-ano" placeholder="Ex: 1974" min="1900" max="2100">
+                    </div>
+                    <div>
+                        <label for="add-tipo">Tipo:*</label>
+                        <select id="add-tipo" required>
+                            <option value="" disabled selected>-- Selecione o Tipo --</option>
+                            <option value="CarroBase">Carro Comum</option>
+                            <option value="CarroEsportivo">Esportivo</option>
+                            <option value="Caminhao">Caminhão</option>
+                        </select>
+                    </div>
+                    <div id="add-capacidade-carga-container">
+                        <label for="add-capacidade-carga">Capacidade Carga (kg):</label>
+                        <input type="number" id="add-capacidade-carga" min="0" placeholder="Ex: 15000">
+                    </div>
+                    <div>
+                        <label for="add-cnh">Vencimento CNH Associada:</label>
+                        <input type="date" id="add-cnh">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="add-imagem-input">Imagem (Opcional):</label>
+                    <input type="file" id="add-imagem-input" accept="image/*">
+                    <div class="imagem-preview-container">
+                        <img class="imagem-preview" id="add-imagem-preview" src="#" alt="Prévia da imagem a adicionar">
+                        <small>Prévia da imagem selecionada.</small>
+                        <small class="warning-text"><i class="fa-solid fa-triangle-exclamation"></i> Imagens muito grandes podem causar lentidão ou falha.</small>
+                    </div>
+                </div>
+                <button type="submit" id="adicionar-veiculo-btn"><i class="fa-solid fa-floppy-disk"></i> Adicionar à Garagem</button>
+            </form>
+        </div>
+    </section>
+
+</div> <!-- Fim do #container -->
+
+<template id="veiculo-template">
+    <div class="veiculo-renderizado" data-template-id>
+        <h2 class="veiculo-titulo">Nome Veículo</h2> 
+        <div class="coluna-imagem-info">
+            <div class="card-info-basica glass-card">
+                <img class="veiculo-imagem" src="default_car.png" alt="Imagem do Veículo">
+                <div class="informacoes-veiculo">
+                    <p><span class="info-label">Status:</span> <span class="veiculo-status status-desligado">Desligado</span></p>
+                    <p><span class="info-label">Velocidade:</span> <span class="veiculo-velocidade">0</span> km/h</p>
+                    <p><span class="info-label">Placa:</span> <span class="veiculo-placa">-</span></p>
+                    <p><span class="info-label">Ano:</span> <span class="veiculo-ano">-</span></p>
+                    <p class="veiculo-info-extra"></p>
+                    <p class="veiculo-cnh-info"></p>
+                    <div class="velocimetro" aria-label="Velocímetro"><div class="veiculo-ponteiro ponteiro"></div></div>
+                    <div class="barra-aceleracao" aria-label="Barra de aceleração"><div class="veiculo-barra-progresso barra-progresso"></div></div>
+                    <button class="btn-excluir-veiculo" data-acao="excluir" title="Excluir este veículo permanentemente"><i class="fa-solid fa-trash-can"></i> Excluir Veículo</button>
+                </div>
+            </div>
+
+            <div class="edicao-veiculo glass-card">
+                <h3><i class="fa-solid fa-pencil"></i> Editar Detalhes</h3>
+                <label for="edit-modelo-veiculo">Modelo:</label> <input type="text" id="edit-modelo-veiculo" class="edit-modelo-veiculo">
+                <label for="edit-cor-veiculo">Cor:</label> <input type="text" id="edit-cor-veiculo" class="edit-cor-veiculo">
+                <label for="edit-placa-veiculo">Placa:</label> <input type="text" id="edit-placa-veiculo" class="edit-placa-veiculo" pattern="[A-Za-z]{3}[0-9][A-Za-z0-9][0-9]{2}|[A-Za-z]{3}[0-9]{4}" title="Formato Mercosul ou antigo">
+                <label for="edit-ano-veiculo">Ano:</label> <input type="number" id="edit-ano-veiculo" class="edit-ano-veiculo" min="1900" max="2100">
+                <label for="edit-cnh-veiculo">Venc. CNH:</label> <input type="date" id="edit-cnh-veiculo" class="edit-cnh-veiculo">
+                <label for="edit-imagem-input">Nova Imagem (Opcional):</label>
+                <input type="file" id="edit-imagem-input" class="edit-imagem-input" accept="image/*">
+                <div class="imagem-preview-container">
+                    <img class="imagem-preview edit-imagem-preview" src="#" alt="Prévia da nova imagem">
+                    <small>Prévia da nova imagem. Se não escolher, mantém a atual.</small>
+                    <small class="warning-text"><i class="fa-solid fa-triangle-exclamation"></i> Imagens muito grandes podem falhar.</small>
+                </div>
+                <button class="salvar-veiculo-btn" data-acao="salvar-edicao"><i class="fa-solid fa-save"></i> Salvar Alterações</button>
+            </div>
+        </div>
+
+        <div class="coluna-acoes-manutencao">
+            <div class="acoes-veiculo glass-card">
+                <h3><i class="fa-solid fa-gamepad"></i> Painel de Controle</h3>
+                <button data-acao="ligar" title="Ligar o veículo"><i class="fa-solid fa-power-off"></i> Ligar</button>
+                <button data-acao="acelerar" title="Acelerar"><i class="fa-solid fa-gas-pump"></i> Acelerar</button>
+                <button data-acao="frear" title="Frear"><i class="fa-solid fa-hand-paper"></i> Frear</button>
+                <button data-acao="buzinar" title="Buzinar"><i class="fa-solid fa-bullhorn"></i> Buzinar</button>
+                <span class="acao-extra"></span>
+                <button data-acao="desligar" title="Desligar o veículo"><i class="fa-solid fa-plug-circle-xmark"></i> Desligar</button>
+            </div>
+
+            <div class="detalhes-extras-card glass-card">
+                <h3><i class="fa-solid fa-database"></i> Detalhes Extras (API Sim.)</h3>
+                <button class="btn-detalhes-extras modern-button" data-acao="buscar-detalhes"><i class="fa-solid fa-magnifying-glass"></i> Ver Detalhes Extras</button>
+                <div class="detalhes-extras-area">
+                    <!-- Conteúdo via JS -->
+                </div>
+            </div>
+
+            <div class="agendamento-section glass-card">
+                <h4><i class="fa-solid fa-wrench"></i> Agendar Manutenção</h4>
+                <form class="form-agendamento">
+                    <label for="agendamento-data">Data:*</label><input type="date" id="agendamento-data" class="agendamento-data" required>
+                    <label for="agendamento-hora">Hora:</label><input type="time" id="agendamento-hora" class="agendamento-hora">
+                    <label for="agendamento-tipo">Tipo de Serviço:*</label><input type="text" id="agendamento-tipo" class="agendamento-tipo" required placeholder="Ex: Revisão completa">
+                    <label for="agendamento-custo">Custo Estimado (R$):</label><input type="number" id="agendamento-custo" class="agendamento-custo" step="0.01" min="0" placeholder="Ex: 550.00">
+                    <label for="agendamento-obs">Observações:</label><textarea id="agendamento-obs" class="agendamento-obs" placeholder="Detalhes: verificar freios..."></textarea>
+                    <button type="submit" class="agendar-manutencao-btn modern-button" title="Adicionar este serviço"><i class="fa-solid fa-calendar-plus"></i> Agendar Serviço</button>
+                </form>
+            </div>
+
+            <div class="historico-section glass-card">
+                <h4><i class="fa-solid fa-book-medical"></i> Histórico de Manutenções <button class="btn-limpar-historico modern-button" title="Limpar TODO o histórico"><i class="fa-solid fa-eraser"></i> Limpar</button></h4>
+                <div class="lista-historico"><p>Nenhum registro encontrado.</p></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script src="JSS/manutencao.js"></script>
+<script src="JSS/carro.js"></script>
+<script src="JSS/carroesportivo.js"></script>
+<script src="JSS/caminhao.js"></script>
+<script src="JSS/garagem.js"></script>
+</body>
+</html>
